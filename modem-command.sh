@@ -21,8 +21,10 @@ key="$1"
 case $key in
     -r|--reboot)
       REQUEST_STRING="curl --silent ${BASE_URL}${CONTROL_PATH} --header 'Cookie: ${SESINFO_DATA}' --header '__RequestVerificationToken: $TOKEN_DATA' --data-raw '${REBOOT_CONTROL}'"
+      REBOOT_OUTPUT=`eval "$REQUEST_STRING"`
+      OUTPUT_MESSAGE=`sed -n 's:.*</response>\(.*\)</rssi>.*:\1:p' <<< $SIGNAL_RESULT`
       
-      eval "$REQUEST_STRING"
+      echo "Response: ${OUTPUT_MESSAGE}"
     ;;
     -s|--signal)
       REQUEST_STRING="curl --silent ${BASE_URL}${SIGNAL_PATH} --header 'Cookie: ${SESINFO_DATA}'"
