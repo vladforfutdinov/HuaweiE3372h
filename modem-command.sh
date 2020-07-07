@@ -22,7 +22,7 @@ case $key in
     -r|--reboot)
       REQUEST_STRING="curl --silent ${BASE_URL}${CONTROL_PATH} --header 'Cookie: ${SESINFO_DATA}' --header '__RequestVerificationToken: $TOKEN_DATA' --data-raw '${REBOOT_CONTROL}'"
       REBOOT_OUTPUT=`eval "$REQUEST_STRING"`
-      OUTPUT_MESSAGE=`sed -n 's:.*</response>\(.*\)</rssi>.*:\1:p' <<< $SIGNAL_RESULT`
+      OUTPUT_MESSAGE=`sed -n 's:.*<response>\(.*\)</response>.*:\1:p' <<< $REBOOT_OUTPUT`
       
       echo "Response: ${OUTPUT_MESSAGE}"
     ;;
