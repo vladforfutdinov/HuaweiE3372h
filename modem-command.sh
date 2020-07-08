@@ -1,8 +1,3 @@
-source ~/.profile
-
-BASE_DIR=$(dirname "$0")
-cd "$BASE_DIR"
-
 BASE_URL=http://192.168.8.1
 TOKEN_PATH=/api/webserver/SesTokInfo
 CONTROL_PATH=/api/device/control
