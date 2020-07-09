@@ -30,7 +30,10 @@ case $key in
       RSRQ=`sed -n 's:.*<rsrq>\(.*\)</rsrq>.*:\1:p' <<< $SIGNAL_RESULT`
       SINR=`sed -n 's:.*<sinr>\(.*\)</sinr>.*:\1:p' <<< $SIGNAL_RESULT`
 
-      echo "RSRQ: ${RSRQ}\nRSRP: ${RSRP}\nRSSI: ${RSSI}\nSINR: ${SINR}"
+      echo "RSSI: ${RSSI}"
+      echo "RSRP: ${RSRP}"
+      echo "RSRQ: ${RSRQ}"
+      echo "SINR: ${SINR}"
     ;;
 esac
 done
