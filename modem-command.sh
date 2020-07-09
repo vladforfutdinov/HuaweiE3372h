@@ -39,13 +39,15 @@ getSignal()
 
 reboot()
 {
+  echo "Reboot: "
+
   getToken
 
-  REQUEST_STRING="curl --silent ${BASE_URL}${CONTROL_PATH} --header 'Cookie: ${SESINFO_DATA}' --header '__RequestVerificationToken: $TOKEN_DATA' --data-raw '${REBOOT_CONTROL}'"
-  REBOOT_OUTPUT=`eval "$REQUEST_STRING"`
-  OUTPUT_MESSAGE=`sed -n 's:.*<response>\(.*\)</response>.*:\1:p' <<< $REBOOT_OUTPUT`
+  local REQUEST_STRING="curl --silent ${BASE_URL}${CONTROL_PATH} --header 'Cookie: ${SESINFO_DATA}' --header '__RequestVerificationToken: $TOKEN_DATA' --data-raw '${REBOOT_CONTROL}'"
+  local REBOOT_OUTPUT=`eval "$REQUEST_STRING"`
+  local OUTPUT_MESSAGE=`sed -n 's:.*<response>\(.*\)</response>.*:\1:p' <<< $REBOOT_OUTPUT`
 
-  echo "Response: ${OUTPUT_MESSAGE}"
+  echo -ne "${OUTPUT_MESSAGE}"
 }
 
 while getopts 'rsi:' OPTION; do
@@ -57,7 +59,6 @@ while getopts 'rsi:' OPTION; do
 done
 
 if [[ -n "$DO_REBOOT" ]]; then
-  echo "Reboot"
   if [[ "$INTERVAL" != 0 ]]; then
     echo "Reboot cannot be started with interval"
     exit 0
