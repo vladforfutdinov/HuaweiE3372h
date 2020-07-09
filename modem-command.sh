@@ -7,16 +7,25 @@ SIGNAL_PATH=/api/device/signal
 
 REBOOT_CONTROL='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><request><Control>1</Control></request>'
 
-TOKEN_OUTPUT=$(curl --silent ${BASE_URL}${TOKEN_PATH})
-SESINFO_DATA=$(sed -n 's:.*<SesInfo>\(.*\)</SesInfo>.*:\1:p' <<< $TOKEN_OUTPUT)
-TOKEN_DATA=$(sed -n 's:.*<TokInfo>\(.*\)</TokInfo>.*:\1:p' <<< $TOKEN_OUTPUT)
+TOKEN_OUTPUT=
+SESINFO_DATA=
+TOKEN_DATA=
 
 DO_REBOOT=
 DO_SIGNAL=
 INTERVAL=0
 
+getToken()
+{
+  TOKEN_OUTPUT=$(curl --silent ${BASE_URL}${TOKEN_PATH})
+  SESINFO_DATA=$(sed -n 's:.*<SesInfo>\(.*\)</SesInfo>.*:\1:p' <<< $TOKEN_OUTPUT)
+  TOKEN_DATA=$(sed -n 's:.*<TokInfo>\(.*\)</TokInfo>.*:\1:p' <<< $TOKEN_OUTPUT)
+}
+
 getSignal()
 {
+  getToken
+
   local REQUEST_STRING="curl --silent ${BASE_URL}${SIGNAL_PATH} --header 'Cookie: ${SESINFO_DATA}'"
   local SIGNAL_RESULT=`eval "$REQUEST_STRING"`
 
@@ -30,7 +39,9 @@ getSignal()
 
 reboot()
 {
- REQUEST_STRING="curl --silent ${BASE_URL}${CONTROL_PATH} --header 'Cookie: ${SESINFO_DATA}' --header '__RequestVerificationToken: $TOKEN_DATA' --data-raw '${REBOOT_CONTROL}'"
+  getToken
+
+  REQUEST_STRING="curl --silent ${BASE_URL}${CONTROL_PATH} --header 'Cookie: ${SESINFO_DATA}' --header '__RequestVerificationToken: $TOKEN_DATA' --data-raw '${REBOOT_CONTROL}'"
   REBOOT_OUTPUT=`eval "$REQUEST_STRING"`
   OUTPUT_MESSAGE=`sed -n 's:.*<response>\(.*\)</response>.*:\1:p' <<< $REBOOT_OUTPUT`
 
