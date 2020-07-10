@@ -39,7 +39,7 @@ getSignal()
 
 reboot()
 {
-  echo "Reboot: "
+  echo -ne "Reboot: "
 
   getToken
 
@@ -47,7 +47,7 @@ reboot()
   local REBOOT_OUTPUT=`eval "$REQUEST_STRING"`
   local OUTPUT_MESSAGE=`sed -n 's:.*<response>\(.*\)</response>.*:\1:p' <<< $REBOOT_OUTPUT`
 
-  echo -ne "${OUTPUT_MESSAGE}"
+  echo "${OUTPUT_MESSAGE}"
 }
 
 while getopts 'rsi:' OPTION; do
