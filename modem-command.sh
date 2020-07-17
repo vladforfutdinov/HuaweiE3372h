@@ -34,7 +34,17 @@ getSignal()
   local RSRQ=`sed -n 's:.*<rsrq>\(.*\)</rsrq>.*:\1:p' <<< $SIGNAL_RESULT`
   local SINR=`sed -n 's:.*<sinr>\(.*\)</sinr>.*:\1:p' <<< $SIGNAL_RESULT`
 
-  echo "RSSI: ${RSSI} | RSRP: ${RSRP} | RSRQ: ${RSRQ} | SINR: ${SINR}"
+  local RSSI_SATITIZED=$(sanitize ${RSSI})
+  local RSRP_SATITIZED=$(sanitize ${RSRP})
+  local RSRQ_SATITIZED=$(sanitize ${RSRQ})
+  local SINR_SATITIZED=$(sanitize ${SINR})
+
+  echo "RSSI: ${RSSI_SATITIZED} | RSRP: ${RSRP_SATITIZED} | RSRQ: ${RSRQ_SATITIZED} | SINR: ${SINR_SATITIZED}     "
+}
+
+sanitize()
+{
+  echo `sed 's/&gt;/>/g;s/&lt;/</g' <<< $1`
 }
 
 reboot()
@@ -74,7 +84,7 @@ if [[ -n "$DO_SIGNAL" ]]; then
     while true
     do
       CURRENT_TIME=$(date +"%T")
-      RESULT=$(getSignal)
+      RESULT=$(timeout 5s getSignal)
       echo -ne "${CURRENT_TIME} - ${RESULT}"\\r
       sleep $INTERVAL;
     done
