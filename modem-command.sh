@@ -39,7 +39,7 @@ getSignal()
   local RSRQ_SATITIZED=$(sanitize ${RSRQ})
   local SINR_SATITIZED=$(sanitize ${SINR})
 
-  echo "RSSI: ${RSSI_SATITIZED} | RSRP: ${RSRP_SATITIZED} | RSRQ: ${RSRQ_SATITIZED} | SINR: ${SINR_SATITIZED}  "
+  echo "RSSI:${RSSI_SATITIZED} | RSRP:${RSRP_SATITIZED} | RSRQ:${RSRQ_SATITIZED} | SINR:${SINR_SATITIZED}  "
 }
 
 sanitize()
