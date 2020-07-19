@@ -39,7 +39,7 @@ getSignal()
   local RSRQ_SATITIZED=$(sanitize ${RSRQ})
   local SINR_SATITIZED=$(sanitize ${SINR})
 
-  echo "RSSI: ${RSSI_SATITIZED} | RSRP: ${RSRP_SATITIZED} | RSRQ: ${RSRQ_SATITIZED} | SINR: ${SINR_SATITIZED}     "
+  echo "RSSI: ${RSSI_SATITIZED} | RSRP: ${RSRP_SATITIZED} | RSRQ: ${RSRQ_SATITIZED} | SINR: ${SINR_SATITIZED}  "
 }
 
 sanitize()
@@ -80,12 +80,26 @@ fi
 if [[ -n "$DO_SIGNAL" ]]; then
   echo "Signal"
   
+  declare -a SPINNER_ARRAY=("-" "/" "|" "\\")
+  SPINNER_COUNTER=0
+
   if [[ "$INTERVAL" != 0 ]]; then
     while true
     do
       CURRENT_TIME=$(date +"%T")
-      RESULT=$(timeout 5s getSignal)
-      echo -ne "${CURRENT_TIME} - ${RESULT}"\\r
+      RESULT=$(getSignal)
+
+      SPINNER_POSITION=${SPINNER_ARRAY[SPINNER_COUNTER]}
+
+      # echo -ne "${CURRENT_TIME} - ${RESULT}"\\r
+      echo -ne \\r"${SPINNER_POSITION} ${RESULT}"
+      
+      SPINNER_COUNTER=$(( SPINNER_COUNTER+1 ))
+
+      if [[ "$SPINNER_COUNTER" > 3 ]]; then
+        SPINNER_COUNTER=0
+      fi
+
       sleep $INTERVAL;
     done
   fi
