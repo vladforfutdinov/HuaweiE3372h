@@ -80,26 +80,13 @@ fi
 if [[ -n "$DO_SIGNAL" ]]; then
   echo "Signal"
   
-  declare -a SPINNER_ARRAY=("-" "/" "|" "\\")
-  SPINNER_COUNTER=0
-
   if [[ "$INTERVAL" != 0 ]]; then
     while true
     do
       CURRENT_TIME=$(date +"%T")
       RESULT=$(getSignal)
 
-      SPINNER_POSITION=${SPINNER_ARRAY[SPINNER_COUNTER]}
-
-      # echo -ne "${CURRENT_TIME} - ${RESULT}"\\r
-      echo -ne \\r"${SPINNER_POSITION} ${RESULT}"
-      
-      SPINNER_COUNTER=$(( SPINNER_COUNTER+1 ))
-
-      if [[ "$SPINNER_COUNTER" > 3 ]]; then
-        SPINNER_COUNTER=0
-      fi
-
+      echo "${CURRENT_TIME} - ${RESULT}"
       sleep $INTERVAL;
     done
   fi
