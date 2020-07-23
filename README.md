@@ -16,7 +16,7 @@ $ modem-command.sh -r -i 2
 ```
 every 2 seconds
 
-# Resourses
+# Resources
 
 ## huawei-router-api (js)
 https://github.com/ishan-marikar/dialog-router-api
