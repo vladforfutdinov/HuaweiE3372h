@@ -26,3 +26,6 @@ https://www.lewuathe.com/querying-huawei-4g-router-to-get-the-devices.html
 
 ## huawei-lte-api (python)
 https://github.com/Salamek/huawei-lte-api
+
+## HuaweiB525Router (python)
+https://github.com/jinxo13/HuaweiB525Router/blob/master/huawei_lte/router.py

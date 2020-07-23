@@ -27,19 +27,19 @@ getSignal()
   getToken
 
   local REQUEST_STRING="curl --silent ${BASE_URL}${SIGNAL_PATH} --header 'Cookie: ${SESINFO_DATA}'"
-  local SIGNAL_RESULT=`eval "$REQUEST_STRING"`
+  local OUTPUT=`eval "$REQUEST_STRING"`
 
-  local RSSI=`sed -n 's:.*<rssi>\(.*\)</rssi>.*:\1:p' <<< $SIGNAL_RESULT`
-  local RSRP=`sed -n 's:.*<rsrp>\(.*\)</rsrp>.*:\1:p' <<< $SIGNAL_RESULT`
-  local RSRQ=`sed -n 's:.*<rsrq>\(.*\)</rsrq>.*:\1:p' <<< $SIGNAL_RESULT`
-  local SINR=`sed -n 's:.*<sinr>\(.*\)</sinr>.*:\1:p' <<< $SIGNAL_RESULT`
+  local RSSI=`sed -n 's:.*<rssi>\(.*\)</rssi>.*:\1:p' <<< $OUTPUT`
+  local RSRP=`sed -n 's:.*<rsrp>\(.*\)</rsrp>.*:\1:p' <<< $OUTPUT`
+  local RSRQ=`sed -n 's:.*<rsrq>\(.*\)</rsrq>.*:\1:p' <<< $OUTPUT`
+  local SINR=`sed -n 's:.*<sinr>\(.*\)</sinr>.*:\1:p' <<< $OUTPUT`
 
   local RSSI_SATITIZED=$(sanitize ${RSSI})
   local RSRP_SATITIZED=$(sanitize ${RSRP})
   local RSRQ_SATITIZED=$(sanitize ${RSRQ})
   local SINR_SATITIZED=$(sanitize ${SINR})
 
-  echo "RSSI:${RSSI_SATITIZED} | RSRP:${RSRP_SATITIZED} | RSRQ:${RSRQ_SATITIZED} | SINR:${SINR_SATITIZED}  "
+  echo "RSSI:${RSSI_SATITIZED} | RSRP:${RSRP_SATITIZED} | RSRQ:${RSRQ_SATITIZED} | SINR:${SINR_SATITIZED}"
 }
 
 sanitize()
@@ -54,13 +54,13 @@ reboot()
   getToken
 
   local REQUEST_STRING="curl --silent ${BASE_URL}${CONTROL_PATH} --header 'Cookie: ${SESINFO_DATA}' --header '__RequestVerificationToken: $TOKEN_DATA' --data-raw '${REBOOT_CONTROL}'"
-  local REBOOT_OUTPUT=`eval "$REQUEST_STRING"`
-  local OUTPUT_MESSAGE=`sed -n 's:.*<response>\(.*\)</response>.*:\1:p' <<< $REBOOT_OUTPUT`
+  local OUTPUT=`eval "$REQUEST_STRING"`
+  local OUTPUT_MESSAGE=`sed -n 's:.*<response>\(.*\)</response>.*:\1:p' <<< $OUTPUT`
 
   echo "${OUTPUT_MESSAGE}"
 }
 
-while getopts 'rsi:' OPTION; do
+while getopts 'rsi:m' OPTION; do
   case $OPTION in
       r) DO_REBOOT=1;;
       s) DO_SIGNAL=1;;
