@@ -60,7 +60,7 @@ reboot()
   echo "${OUTPUT_MESSAGE}"
 }
 
-while getopts 'rsi:m' OPTION; do
+while getopts 'rsi:' OPTION; do
   case $OPTION in
       r) DO_REBOOT=1;;
       s) DO_SIGNAL=1;;
