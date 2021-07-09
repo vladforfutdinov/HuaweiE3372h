@@ -1,20 +1,20 @@
 # Hou to use
 
-Reboot modem
+Reboot modem:
 ```
 $ modem-command.sh -r
 ```
 
-Get signal info
+Get signal info:
 ```
 $ modem-command.sh -s
 ```
 
-Get signal periodically
+Get signal periodically:
 ```
 $ modem-command.sh -s -i 2
 ```
-every 2 seconds
+for every 2 seconds
 
 # Resources
 
