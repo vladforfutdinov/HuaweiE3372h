@@ -12,7 +12,7 @@ $ modem-command.sh -s
 
 Get signal periodically
 ```
-$ modem-command.sh -r -i 2
+$ modem-command.sh -s -i 2
 ```
 every 2 seconds
 
