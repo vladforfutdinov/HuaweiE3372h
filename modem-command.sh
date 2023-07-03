@@ -29,17 +29,18 @@ getSignal()
   local REQUEST_STRING="curl --silent ${BASE_URL}${SIGNAL_PATH} --header 'Cookie: ${SESINFO_DATA}'"
   local OUTPUT=`eval "$REQUEST_STRING"`
 
-  local RSSI=`sed -n 's:.*<rssi>\(.*\)</rssi>.*:\1:p' <<< $OUTPUT`
+  # local RSSI=`sed -n 's:.*<rssi>\(.*\)</rssi>.*:\1:p' <<< $OUTPUT`
   local RSRP=`sed -n 's:.*<rsrp>\(.*\)</rsrp>.*:\1:p' <<< $OUTPUT`
   local RSRQ=`sed -n 's:.*<rsrq>\(.*\)</rsrq>.*:\1:p' <<< $OUTPUT`
   local SINR=`sed -n 's:.*<sinr>\(.*\)</sinr>.*:\1:p' <<< $OUTPUT`
 
-  local RSSI_SATITIZED=$(sanitize ${RSSI})
+  # local RSSI_SATITIZED=$(sanitize ${RSSI})
   local RSRP_SATITIZED=$(sanitize ${RSRP})
   local RSRQ_SATITIZED=$(sanitize ${RSRQ})
   local SINR_SATITIZED=$(sanitize ${SINR})
 
-  echo "RSSI:${RSSI_SATITIZED} | RSRP:${RSRP_SATITIZED} | RSRQ:${RSRQ_SATITIZED} | SINR:${SINR_SATITIZED}"
+  # echo "RSSI:${RSSI_SATITIZED} | RSRP:${RSRP_SATITIZED} | RSRQ:${RSRQ_SATITIZED} | SINR:${SINR_SATITIZED}"
+  echo "RSRP:${RSRP_SATITIZED} | RSRQ:${RSRQ_SATITIZED} | SINR:${SINR_SATITIZED}"
 }
 
 sanitize()
