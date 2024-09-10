@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "minimist": "^1.2.5",
-    "node-fetch": "^2.6.0",
-    "xml2js": "^0.4.23"
+    "minimist": "^1.2.6",
+    "node-fetch": "^2.6.7",
+    "xml2js": "^0.5.0"
   },
   "devDependencies": {},
   "scripts": {
